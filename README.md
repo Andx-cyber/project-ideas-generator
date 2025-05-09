@@ -39,7 +39,7 @@ A responsive web application that helps programmers find new project ideas based
 
 1. Clone this repository:
 ```
-git clone [https://github.com/Andx-cyber/project-ideas-generator.git]
+git clone https://github.com/Andx-cyber/project-ideas-generator.git
 ```
 
 2. Open the `index.html` file in your browser:
