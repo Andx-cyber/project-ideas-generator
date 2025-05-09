@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💡 Project Ideas Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind.config.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="script.js" defer></script>
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-indigo-600 dark:text-indigo-400">
+                <span class="inline-block animate-bounce-slow">💡</span> Project Ideas Generator
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300">Get unique project ideas based on your level and preferred technology.</p>
+            <div class="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                <span id="ideaCount" class="font-semibold"></span> project ideas available
+            </div>
+        </header>
+
+        <!-- Dark Mode & Search Bar Toggle -->
+        <div class="flex justify-between items-center mb-4">
+            <button id="searchToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-transform hover:scale-110">
+                <i class="fas fa-search"></i>
+            </button>
+            
+            <div class="flex gap-2">
+                <button id="favoritesBtn" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-transform hover:scale-110">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <button id="darkModeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div id="searchBar" class="mb-4 hidden">
+            <div class="relative">
+                <input type="text" id="searchInput" placeholder="Search project ideas..." class="w-full p-3 pl-10 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500"></i>
+                <button id="clearSearchBtn" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8 transform transition hover:shadow-lg">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label for="skillLevel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Skill Level</label>
+                    <select id="skillLevel" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="technology" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Technology</label>
+                    <select id="technology" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="python">Python</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="htmlcss">HTML/CSS</option>
+                        <option value="react">React</option>
+                        <option value="nodejs">Node.js</option>
+                        <option value="cpp">C++</option>
+                        <option value="aiml">AI/ML</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <label for="projectDuration" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Project Duration</label>
+                <select id="projectDuration" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="any">Any Duration</option>
+                    <option value="short">Short (1-3 days)</option>
+                    <option value="medium">Medium (1-2 weeks)</option>
+                    <option value="long">Long (2+ weeks)</option>
+                </select>
+            </div>
+            
+            <button id="generateBtn" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm transform transition hover:scale-105 flex items-center justify-center">
+                <span class="mr-2">Generate Idea</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Result Section -->
+        <div id="resultSection" class="hidden bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8 transition-all duration-300">
+            <div class="text-center mb-4">
+                <span class="inline-block bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-3 py-1 rounded-full text-sm font-semibold">Project Idea</span>
+            </div>
+            <h2 id="projectTitle" class="text-2xl font-bold text-gray-800 dark:text-white mb-3 text-center"></h2>
+            <p id="projectDescription" class="text-gray-600 dark:text-gray-300 mb-4"></p>
+            <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-md mb-4">
+                <h3 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">⚙️ Recommended Tech Stack:</h3>
+                <p id="projectTechStack" class="text-gray-600 dark:text-gray-400"></p>
+            </div>
+            
+            <div class="flex justify-between items-center mb-4">
+                <div id="difficultyRating" class="flex items-center">
+                    <span class="text-sm text-gray-600 dark:text-gray-400 mr-2">Difficulty:</span>
+                    <div class="flex">
+                        <i class="text-yellow-400 fas fa-star"></i>
+                        <i id="star2" class="text-gray-300 dark:text-gray-600 fas fa-star"></i>
+                        <i id="star3" class="text-gray-300 dark:text-gray-600 fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div id="projectDurationBadge" class="px-3 py-1 text-sm rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                    Short
+                </div>
+            </div>
+            
+            <div id="resourceLinkContainer" class="hidden mb-4">
+                <a id="resourceLink" href="#" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    <span>Learn more</span>
+                </a>
+            </div>
+            
+            <div class="flex justify-between gap-4 mb-4">
+                <button id="newIdeaBtn" class="flex-1 py-2 px-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-medium rounded-md shadow-sm transition">
+                    Generate Another
+                </button>
+                <button id="favoriteBtn" class="py-2 px-4 bg-pink-100 dark:bg-pink-900 hover:bg-pink-200 dark:hover:bg-pink-800 text-pink-800 dark:text-pink-200 font-medium rounded-md shadow-sm transition flex items-center justify-center">
+                    <i class="far fa-heart mr-2"></i> Save
+                </button>
+                <button id="shareBtn" class="py-2 px-4 bg-green-500 hover:bg-green-600 text-white font-medium rounded-md shadow-sm transition flex items-center justify-center">
+                    <i class="fas fa-share-alt mr-2"></i> Share
+                </button>
+            </div>
+        </div>
+        
+        <!-- Search Results Section -->
+        <div id="searchResultsSection" class="hidden bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Search Results</h3>
+            <div id="searchResults" class="space-y-4"></div>
+        </div>
+        
+        <!-- Favorites Section -->
+        <div id="favoritesSection" class="hidden bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">Saved Ideas</h3>
+                <button id="clearFavoritesBtn" class="text-sm text-red-600 dark:text-red-400 hover:underline">
+                    Clear All
+                </button>
+            </div>
+            <div id="favoritesList" class="space-y-4">
+                <p class="text-gray-500 dark:text-gray-400 text-center py-4">No saved ideas yet. Click the heart icon to save ideas you like!</p>
+            </div>
+        </div>
+        
+        <!-- Share Modal -->
+        <div id="shareModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 m-4 max-w-sm w-full">
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">Share this project idea</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Copy the link below:</p>
+                <div class="flex mb-4">
+                    <input id="shareLink" type="text" readonly class="flex-1 p-2 border border-gray-300 dark:border-gray-600 rounded-l-md bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white">
+                    <button id="copyBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 rounded-r-md">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="flex justify-end">
+                    <button id="closeModalBtn" class="py-2 px-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-md">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 dark:text-gray-400 mt-12">
+            <p>Designed with ❤️ for programmers</p>
+            <a href="https://github.com/Andx-cyber" target="_blank" class="inline-flex items-center mt-2 text-indigo-600 dark:text-indigo-400 hover:underline">
+                <svg class="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+                </svg>
+                GitHub
+            </a>
+        </footer>
+    </div>
+</body>
+</html> 
